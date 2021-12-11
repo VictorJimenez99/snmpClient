@@ -18,10 +18,10 @@ if __name__ == '__main__':
     errorIndication, errorStatus, errorIndex, varBinds = next(iterator)
 
     if errorIndication:
-        print(f"errorIndicationaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa: {errorIndication}")
+        print(f"errorIndication: {errorIndication}")
 
     elif errorStatus:
-        print('aaaaaaaaaaaaaaaaaaaaaaasssssssssssssssssssssssssssssssssssssssss%s at %s' % (errorStatus.prettyPrint(),
+        print('%s at %s' % (errorStatus.prettyPrint(),
                             errorIndex and varBinds[int(errorIndex) - 1][0] or '?'))
 
     else:
