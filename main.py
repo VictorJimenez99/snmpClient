@@ -1,9 +1,15 @@
 from pysnmp.hlapi import *
 
 if __name__ == '__main__':
+    engine = SnmpEngine()
+    user_data=UsmUserData(userName=b"snmp_admin",
+                          authKey=b"qwertyui",
+                          privKey=b"qwertyui",
+                          privProtocol=(1, 3, 6, 1, 6, 3, 10, 1, 2, 2),
+                          authProtocol=(1, 3, 6, 1, 6, 3, 10, 1, 1, 3))
+    print(user_data)
     iterator = getCmd(
-        SnmpEngine(),
-        UsmUserData(userName=b"admin_snmp", authKey=b"admin", privKey=b"admin", authProtocol=usmHMACMD5AuthProtocol),
+        engine, user_data,
         UdpTransportTarget(('10.1.0.254', 161)),
         ContextData(),
         ObjectType(ObjectIdentity('SNMPv2-MIB', 'sysDescr', 0))
