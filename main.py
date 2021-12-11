@@ -3,7 +3,7 @@ from pysnmp.hlapi import *
 if __name__ == '__main__':
     iterator = getCmd(
         SnmpEngine(),
-        UsmUserData(userName="admin_snmp", authKey="admin", privKey="admin", authProtocol=usmDESPrivProtocol),
+        UsmUserData(userName="admin_snmp", authKey="admin", privKey="admin", authProtocol=usmHMACMD5AuthProtocol),
         UdpTransportTarget(('10.1.0.254', 161)),
         ContextData(),
         ObjectType(ObjectIdentity('SNMPv2-MIB', 'sysDescr', 0))
