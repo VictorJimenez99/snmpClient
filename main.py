@@ -1,3 +1,6 @@
+import time
+
+import requests
 from pysnmp.hlapi import *
 
 
@@ -47,16 +50,27 @@ def set_oid_value(ip, oid, new_value):
 
 
 if __name__ == '__main__':
+
     sys_description = '1.3.6.1.2.1.1.1.0'
     sys_location = '1.3.6.1.2.1.1.6.0'
     sys_contact = '1.3.6.1.2.1.1.4.0'
     sys_name = '1.3.6.1.4.1.9.2.1.3.0'
     setter_sys_name = '1.3.6.1.2.1.1.5.0'
 
-    get_oid_value("10.1.0.254", sys_name)
-    get_oid_value("10.1.0.254", sys_location)
-    get_oid_value("10.1.0.254", sys_description)
-    get_oid_value("10.1.0.254", sys_contact)
+    server_url = "http://localhost:5000/"
 
-    set_oid_value("10.1.0.254", setter_sys_name, "R41")
-    get_oid_value("10.1.0.254", sys_name)
+    while True:
+        print("loop_start")
+        sess = requests.Session()
+        credentials_json = {"name": "root", "password": "root"}
+        # payload_req = {'json_payload': credentials_json}
+        login_request = sess.post(f"{server_url}create_session",
+                                  json=credentials_json)
+        print(f"request: {login_request}")
+
+        time.sleep(10)
+
+
+
+
+
