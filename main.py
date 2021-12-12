@@ -47,7 +47,6 @@ def set_oid_value(ip, oid, new_value):
 
 
 if __name__ == '__main__':
-    #sys_name = '1.3.6.1.2.1.1.5.0'
     sys_description = '1.3.6.1.2.1.1.1.0'
     sys_location = '1.3.6.1.2.1.1.6.0'
     sys_contact = '1.3.6.1.2.1.1.4.0'
@@ -57,3 +56,6 @@ if __name__ == '__main__':
     get_oid_value("10.1.0.254", sys_location)
     get_oid_value("10.1.0.254", sys_description)
     get_oid_value("10.1.0.254", sys_contact)
+
+    set_oid_value("10.1.0.254", sys_name, "R41")
+    get_oid_value("10.1.0.254", sys_name)
