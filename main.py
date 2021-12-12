@@ -59,6 +59,7 @@ if __name__ == '__main__':
 
     server_url = "http://localhost:5000/"
 
+    url_get_needs_read = "http://localhost:5000/snmp/get_needs_read"
     while True:
         print("loop_start")
         sess = requests.Session()
@@ -67,6 +68,8 @@ if __name__ == '__main__':
         login_request = sess.post(f"{server_url}create_session",
                                   json=credentials_json)
         print(f"request: {login_request}")
+
+        list_needs_read = sess.get(url_get_needs_read)
 
         time.sleep(10)
 
