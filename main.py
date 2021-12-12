@@ -36,12 +36,14 @@ def set_oid_value(ip, oid, new_value):
                             privKey=b"qwertyui",
                             privProtocol=(1, 3, 6, 1, 6, 3, 10, 1, 2, 2),
                             authProtocol=(1, 3, 6, 1, 6, 3, 10, 1, 1, 3))
-    setCmd(
+    command = setCmd(
         engine, user_data,
         UdpTransportTarget((ip, 161)),
         ContextData(),
         ObjectType(ObjectIdentity(oid, new_value))
     )
+
+    next(command)
 
 
 if __name__ == '__main__':
