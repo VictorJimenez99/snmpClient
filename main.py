@@ -93,6 +93,7 @@ if __name__ == '__main__':
                 json_object = {"router_name": router_info.get("router_name"),
                                "snmp_key": new_val_key,
                                "snmp_value": new_val_val}
-                sess.post(url_set_snmp, json=json_object)
+                update_result = sess.post(url_set_snmp, json=json_object)
+                print(update_result.text)
 
         time.sleep(10)
