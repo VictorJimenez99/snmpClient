@@ -71,6 +71,7 @@ if __name__ == '__main__':
 
         list_needs_read = sess.get(url_get_needs_read)
 
+        print(list_needs_read)
         time.sleep(10)
 
 
