@@ -40,7 +40,7 @@ def set_oid_value(ip, oid, new_value):
         engine, user_data,
         UdpTransportTarget((ip, 161)),
         ContextData(),
-        ObjectType(ObjectIdentity(oid, new_value))
+        ObjectType(ObjectIdentity(oid), new_value)
     )
 
     next(command)
