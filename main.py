@@ -12,7 +12,7 @@ if __name__ == '__main__':
         engine, user_data,
         UdpTransportTarget(('10.1.0.254', 161)),
         ContextData(),
-        ObjectType(ObjectIdentity("1.3.6.1.4.1.9.2.1.3"))
+        ObjectType(ObjectIdentity("1.3.6.1.4.1.9.2.1.3.0"))
     )
 
     errorIndication, errorStatus, errorIndex, varBinds = next(iterator)
