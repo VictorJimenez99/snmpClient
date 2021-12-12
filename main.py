@@ -28,7 +28,7 @@ def get_oid_value(ip, oid):
 
     else:
         for varBind in var_binds:
-            print(' = '.join([x.prettyPrint() for x in varBind]))
+            print('value = '.join([x.prettyPrint() for x in varBind]))
 
 
 def set_oid_value(ip, oid, new_value):
