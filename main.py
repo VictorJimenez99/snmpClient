@@ -69,9 +69,11 @@ if __name__ == '__main__':
                                   json=credentials_json)
         print(f"request: {login_request}")
 
-        list_needs_read = sess.get(url_get_needs_read)
+        list_needs_read = sess.get(url_get_needs_read).json().get("list")
 
-        print(list_needs_read.json())
+        print(list_needs_read)
+
+
         time.sleep(10)
 
 
