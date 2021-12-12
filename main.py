@@ -73,6 +73,9 @@ if __name__ == '__main__':
 
         print(list_needs_read)
 
+        for router_info in list_needs_read:
+            print(f"Router: {router_info}")
+            get_oid_value(router_info.get("router_ip"), sys_name)
 
         time.sleep(10)
 
