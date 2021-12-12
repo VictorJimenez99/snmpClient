@@ -48,5 +48,5 @@ def set_oid_value(ip, oid, new_value):
 
 if __name__ == '__main__':
     get_oid_value("10.1.0.254", "1.3.6.1.2.1.1.6.0")
-    set_oid_value("10.1.0.254", "1.3.6.1.2.1.1.6", "primer nodo, Lugar1")
+    set_oid_value("10.1.0.254", "1.3.6.1.2.1.1.6.0", "primer nodo, Lugar1")
     get_oid_value("10.1.0.254", "1.3.6.1.2.1.1.6.0")
