@@ -72,6 +72,7 @@ if __name__ == '__main__':
     server_url = "http://localhost:5000/"
 
     url_get_needs_read = "http://localhost:5000/snmp/get_needs_read"
+    url_set_snmp = "http://localhost:5000/router/set_snmp"
     while True:
         print("loop_start")
         sess = requests.Session()
@@ -88,5 +89,10 @@ if __name__ == '__main__':
         for router_info in list_needs_read:
             new_values = get_snmp_info(router_info)
             print(f"new_values for: {router_info}: {new_values}")
+            for (new_val_key, new_val_val) in new_values.items():
+                json_object = {"router_name": router_info.get("router_name"),
+                               "snmp_key": new_val_key,
+                               "snmp_value": new_val_val}
+                sess.post(url_set_snmp, json=json_object)
 
         time.sleep(10)
