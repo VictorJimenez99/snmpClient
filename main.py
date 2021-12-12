@@ -51,17 +51,17 @@ def set_oid_value(ip, oid, new_value):
     next(command)
 
 
-sys_description = '1.3.6.1.2.1.1.1.0'
-sys_location = '1.3.6.1.2.1.1.6.0'
-sys_contact = '1.3.6.1.2.1.1.4.0'
-sys_name = '1.3.6.1.4.1.9.2.1.3.0'
-setter_sys_name = '1.3.6.1.2.1.1.5.0'
+sys_description_oid = '1.3.6.1.2.1.1.1.0'
+sys_location_oid = '1.3.6.1.2.1.1.6.0'
+sys_contact_oid = '1.3.6.1.2.1.1.4.0'
+sys_name_oid = '1.3.6.1.4.1.9.2.1.3.0'
+setter_sys_name_oid = '1.3.6.1.2.1.1.5.0'
 
 
 def get_snmp_info(_router_info: dict):
-    sys_name_value = get_oid_value(router_info.get("router_ip"), sys_name)
-    sys_contact_value = get_oid_value(router_info.get("router_ip"), sys_name)
-    sys_location_value = get_oid_value(router_info.get("router_ip"), sys_location)
+    sys_name_value = get_oid_value(router_info.get("router_ip"), sys_name_oid)
+    sys_contact_value = get_oid_value(router_info.get("router_ip"), sys_contact_oid)
+    sys_location_value = get_oid_value(router_info.get("router_ip"), sys_location_oid)
     return {"sys_name": sys_name_value,
             "sys_contact": sys_contact_value,
             "sys_location": sys_location_value}
