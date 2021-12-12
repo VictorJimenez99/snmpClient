@@ -28,7 +28,9 @@ def get_oid_value(ip, oid):
 
     else:
         for varBind in var_binds:
-            print('value = '.join([x.prettyPrint() for x in varBind]))
+            result = (' = '.join([x.prettyPrint() for x in varBind]))
+            result = result.split(' = ')
+            return result[1]
 
 
 def set_oid_value(ip, oid, new_value):
@@ -75,7 +77,8 @@ if __name__ == '__main__':
 
         for router_info in list_needs_read:
             print(f"Router: {router_info}")
-            get_oid_value(router_info.get("router_ip"), sys_name)
+            value = get_oid_value(router_info.get("router_ip"), sys_name)
+            print(value)
 
         time.sleep(10)
 
