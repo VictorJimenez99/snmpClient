@@ -30,4 +30,4 @@ def get_oid_value(ip, oid):
 
 
 if __name__ == '__main__':
-    get_oid_value("10.1.0.254", "1.3.6.1.2.1.2.2")
+    get_oid_value("10.1.0.254", "1.3.6.1.2.1.1.5")
