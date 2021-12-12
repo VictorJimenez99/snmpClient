@@ -51,13 +51,23 @@ def set_oid_value(ip, oid, new_value):
     next(command)
 
 
-if __name__ == '__main__':
+sys_description = '1.3.6.1.2.1.1.1.0'
+sys_location = '1.3.6.1.2.1.1.6.0'
+sys_contact = '1.3.6.1.2.1.1.4.0'
+sys_name = '1.3.6.1.4.1.9.2.1.3.0'
+setter_sys_name = '1.3.6.1.2.1.1.5.0'
 
-    sys_description = '1.3.6.1.2.1.1.1.0'
-    sys_location = '1.3.6.1.2.1.1.6.0'
-    sys_contact = '1.3.6.1.2.1.1.4.0'
-    sys_name = '1.3.6.1.4.1.9.2.1.3.0'
-    setter_sys_name = '1.3.6.1.2.1.1.5.0'
+
+def get_snmp_info(_router_info: dict):
+    sys_name_value = get_oid_value(router_info.get("router_ip"), sys_name)
+    sys_contact_value = get_oid_value(router_info.get("router_ip"), sys_name)
+    sys_location_value = get_oid_value(router_info.get("router_ip"), sys_location)
+    return {"sys_name": sys_name_value,
+            "sys_contact": sys_contact_value,
+            "sys_location": sys_location_value}
+
+
+if __name__ == '__main__':
 
     server_url = "http://localhost:5000/"
 
@@ -76,13 +86,7 @@ if __name__ == '__main__':
         print(list_needs_read)
 
         for router_info in list_needs_read:
-            print(f"Router: {router_info}")
-            value = get_oid_value(router_info.get("router_ip"), sys_name)
-            print(value)
+            new_values = get_snmp_info(router_info)
+            print(f"new_values for: {router_info}: {new_values}")
 
         time.sleep(10)
-
-
-
-
-
