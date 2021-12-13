@@ -57,6 +57,7 @@ server_url = "http://localhost:5000/"
 url_get_needs_read = "http://localhost:5000/snmp/get_needs_read"
 url_get_needs_update = "http://localhost:5000/snmp/get_needs_update"
 url_set_snmp = "http://localhost:5000/router/set_snmp_drop_update"
+url_get_system_snmp = "http://localhost:5000/router/get_snmp"
 
 sys_description_oid = '1.3.6.1.2.1.1.1.0'
 sys_location_oid = '1.3.6.1.2.1.1.6.0'
@@ -101,8 +102,9 @@ def thread_update(debug):
         cprint(debug, list_needs_update)
 
         for router_info in list_needs_update:
-            new_values = get_snmp_info(router_info)
-            cprint(debug, f"update: {new_values}")
+            old_values = get_snmp_info(router_info)
+            new_values = sess.get(url_get_system_snmp, json={"router_name": router_info.get("router_name")}).json()
+            cprint(debug, f"update: {old_values} with: {new_values}")
 
         cprint(debug, f"update: sleeping for: {sleep_time}s")
         time.sleep(sleep_time)
