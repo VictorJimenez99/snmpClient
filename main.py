@@ -82,14 +82,15 @@ if __name__ == '__main__':
                                   json=credentials_json)
         print(f"request: {login_request}")
 
-        json_ret = sess.get(url_get_needs_read).json()
-        print(f"debug: {json_ret}")
+        response_ss = sess.get(url_get_needs_read)
+        if response_ss.status_code != 200:
+            print("error sleeping for 10s")
+            time.sleep(10)
+            continue
+        json_ret = response_ss.json()
 
         list_needs_read = json_ret.get("list")
-        sleep_time = json_ret.get("sleep_time")
-
-        print(f"debug: {json_ret}")
-        print(f"{list_needs_read}, sleep_for: {sleep_time}")
+        sleep_time = int(json_ret.get("sleep_time"))
 
         for router_info in list_needs_read:
             new_values = get_snmp_info(router_info)
@@ -101,4 +102,5 @@ if __name__ == '__main__':
                 update_result = sess.post(url_set_snmp, json=json_object)
                 print(update_result.text)
 
-        time.sleep(10)
+        print(f"sleeping for: {sleep_time}s")
+        time.sleep(sleep_time)
