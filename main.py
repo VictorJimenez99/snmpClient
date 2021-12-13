@@ -142,7 +142,7 @@ def thread_read(debug):
 
 
 if __name__ == '__main__':
-    thread_read_h = threading.Thread(target=thread_read, args=[True])
+    thread_read_h = threading.Thread(target=thread_read, args=[False])
     thread_update_h = threading.Thread(target=thread_update, args=[True])
 
     thread_read_h.start()
