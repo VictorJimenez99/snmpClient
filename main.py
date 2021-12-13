@@ -71,6 +71,7 @@ if __name__ == '__main__':
 
     server_url = "http://localhost:5000/"
 
+
     url_get_needs_read = "http://localhost:5000/snmp/get_needs_read"
     url_set_snmp = "http://localhost:5000/router/set_snmp_drop_update"
     while True:
