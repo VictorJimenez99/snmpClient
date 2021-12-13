@@ -137,8 +137,8 @@ def thread_read():
 
 
 if __name__ == '__main__':
-    thread_read_h = threading.Thread(target=thread_read, args=" ")
-    thread_update_h = threading.Thread(target=thread_update, args=" ")
+    thread_read_h = threading.Thread(target=thread_read)
+    thread_update_h = threading.Thread(target=thread_update)
 
     thread_read_h.start()
     thread_update_h.start()
