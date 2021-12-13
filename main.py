@@ -98,6 +98,7 @@ def thread_update(debug):
 
         list_needs_read = json_ret.get("list")
         sleep_time = int(json_ret.get("sleep_time"))
+        cprint(debug, )
 
         for router_info in list_needs_read:
             new_values = get_snmp_info(router_info)
