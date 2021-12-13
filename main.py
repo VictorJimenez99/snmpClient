@@ -76,7 +76,7 @@ def get_snmp_info(_router_info: dict):
 
 def thread_update():
     while True:
-        print("loop_start_update")
+        print("update: loop_start_update")
         sess = requests.Session()
         credentials_json = {"name": "root", "password": "root"}
         # payload_req = {'json_payload': credentials_json}
@@ -96,25 +96,25 @@ def thread_update():
 
         for router_info in list_needs_read:
             new_values = get_snmp_info(router_info)
-            print(new_values)
+            print(f"update: {new_values}")
 
-        print(f"sleeping for: {sleep_time}s")
+        print(f"update: sleeping for: {sleep_time}s")
         time.sleep(sleep_time)
 
 
 def thread_read():
     while True:
-        print("loop_start_read")
+        print("read: loop_start_read")
         sess = requests.Session()
         credentials_json = {"name": "root", "password": "root"}
         # payload_req = {'json_payload': credentials_json}
         login_request = sess.post(f"{server_url}create_session",
                                   json=credentials_json)
-        print(f"request: {login_request}")
+        print(f"read: request: {login_request}")
 
         response_ss = sess.get(url_get_needs_read)
         if response_ss.status_code != 200:
-            print("error sleeping for 10s")
+            print("read: error sleeping for 10s")
             time.sleep(10)
             continue
         json_ret = response_ss.json()
@@ -124,15 +124,15 @@ def thread_read():
 
         for router_info in list_needs_read:
             new_values = get_snmp_info(router_info)
-            print(f"new_values for: {router_info}: {new_values}")
+            # print(f"read: new_values for: {router_info}: {new_values}")
             for (new_val_key, new_val_val) in new_values.items():
                 json_object = {"router_name": router_info.get("router_name"),
                                "snmp_key": new_val_key,
                                "snmp_new_value": new_val_val}
                 update_result = sess.post(url_set_snmp, json=json_object)
-                print(update_result.text)
+                print(f"read: {update_result.text}")
 
-        print(f"sleeping for: {sleep_time}s")
+        print(f"read: sleeping for: {sleep_time}s")
         time.sleep(sleep_time)
 
 
