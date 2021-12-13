@@ -87,11 +87,11 @@ def thread_update(debug):
         # payload_req = {'json_payload': credentials_json}
         login_request = sess.post(f"{server_url}create_session",
                                   json=credentials_json)
-        cprint(debug, f"request: {login_request}")
+        cprint(debug, f"update: request: {login_request}")
 
         response_ss = sess.get(url_get_needs_update)
         if response_ss.status_code != 200:
-            cprint(debug, "error sleeping for 10s")
+            cprint(debug, "update: error sleeping for 10s")
             time.sleep(10)
             continue
         json_ret = response_ss.json()
