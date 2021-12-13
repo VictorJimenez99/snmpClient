@@ -88,6 +88,7 @@ if __name__ == '__main__':
         list_needs_read = json_ret.get("list")
         sleep_time = json_ret.get("sleep_time")
 
+        print(f"debug: {json_ret}")
         print(f"{list_needs_read}, sleep_for: {sleep_time}")
 
         for router_info in list_needs_read:
