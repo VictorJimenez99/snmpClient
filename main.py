@@ -103,8 +103,35 @@ def thread_update(debug):
 
         for router_info in list_needs_update:
             old_values = get_snmp_info(router_info)
-            new_values = sess.get(url_get_system_snmp, json={"router_name": router_info.get("router_name")}).json()
+            new_values: dict = sess.get(url_get_system_snmp, json={"router_name": router_info.get("router_name")}).json()
             cprint(debug, f"update: {old_values} with: {new_values}")
+            old_sys_name = old_values.get("sys_name")
+            new_sys_name = new_values.get("sys_name")
+            old_sys_location = old_values.get("sys_location")
+            new_sys_location = new_values.get("sys_location")
+            old_sys_contact = old_values.get("sys_contact")
+            new_sys_contact = new_values.get("sys_contact")
+            if old_sys_name != new_sys_name:
+                set_oid_value(router_info.get("router_ip"), setter_sys_name_oid, new_sys_name)
+                json_object = {"router_name": router_info.get("router_name"),
+                               "snmp_key": "sys_name",
+                               "snmp_new_value": new_sys_name}
+                update_result = sess.post(url_set_snmp, json=json_object)
+                cprint(debug, f"update: {update_result.text}")
+            if old_sys_contact != new_sys_contact:
+                set_oid_value(router_info.get("router_ip"), sys_contact_oid, new_sys_contact)
+                json_object = {"router_name": router_info.get("router_name"),
+                               "snmp_key": "sys_contact",
+                               "snmp_new_value": new_sys_contact}
+                update_result = sess.post(url_set_snmp, json=json_object)
+                cprint(debug, f"update: {update_result.text}")
+            if old_sys_location != new_sys_location:
+                set_oid_value(router_info.get("router_ip"), sys_location_oid, new_sys_location)
+                json_object = {"router_name": router_info.get("router_name"),
+                               "snmp_key": "sys_location",
+                               "snmp_new_value": new_sys_location}
+                update_result = sess.post(url_set_snmp, json=json_object)
+                cprint(debug, f"update: {update_result.text}")
 
         cprint(debug, f"update: sleeping for: {sleep_time}s")
         time.sleep(sleep_time)
