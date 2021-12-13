@@ -71,7 +71,6 @@ if __name__ == '__main__':
 
     server_url = "http://localhost:5000/"
 
-
     url_get_needs_read = "http://localhost:5000/snmp/get_needs_read"
     url_set_snmp = "http://localhost:5000/router/set_snmp_drop_update"
     while True:
@@ -84,6 +83,7 @@ if __name__ == '__main__':
         print(f"request: {login_request}")
 
         json_ret = sess.get(url_get_needs_read).json()
+        print(f"debug: {json_ret}")
 
         list_needs_read = json_ret.get("list")
         sleep_time = json_ret.get("sleep_time")
