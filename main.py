@@ -176,6 +176,8 @@ def thread_read(debug):
 
 def thread_packages(debug):
     cprint(debug, "Hola")
+    val = get_oid_value("10.1.0.254", "ifDescr.1")
+    cprint(debug, val)
 
 
 if __name__ == '__main__':
