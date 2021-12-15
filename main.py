@@ -57,6 +57,8 @@ server_url = "http://localhost:5000/"
 url_get_needs_read = "http://localhost:5000/snmp/get_needs_read"
 url_get_needs_update = "http://localhost:5000/snmp/get_needs_update"
 url_set_snmp = "http://localhost:5000/router/set_snmp_drop_update"
+url_get_snmp_list_packets = "http://localhost:5000/get_json_list_snmp_pack"
+url_set_snmp_packet = "http://localhost:5000/update_snmp_pack"
 url_get_system_snmp = "http://localhost:5000/router/get_snmp"
 
 sys_description_oid = '1.3.6.1.2.1.1.1.0'
@@ -218,9 +220,29 @@ def in_pkt_get_oid_from_if_name(interface_name):
 
 
 def thread_packages(debug):
-    cprint(debug, "Hola")
     val = get_oid_value("10.1.0.254", out_pkt_get_oid_from_if_name("FastEthernet0/0"))
-    cprint(debug, val)
+    while True:
+        cprint(debug, "pkts: loop_start_read")
+        sess = requests.Session()
+        credentials_json = {"name": "root", "password": "root"}
+        # payload_req = {'json_payload': credentials_json}
+        login_request = sess.post(f"{server_url}create_session",
+                                  json=credentials_json)
+        cprint(debug, f"read: request: {login_request}")
+
+        response_ss = sess.get(url_get_snmp_list_packets)
+        if response_ss.status_code != 200:
+            cprint(debug, "read: error sleeping for 10s")
+            time.sleep(10)
+            continue
+        json_ret = response_ss.json()
+
+        list_needs_read = json_ret.get("list")
+        sleep_time = int(json_ret.get("sleep"))
+
+        cprint(debug, f"list: {list_needs_read}, sleep_time: {sleep_time}")
+
+        time.sleep(10)
 
 
 if __name__ == '__main__':
