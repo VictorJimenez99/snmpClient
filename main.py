@@ -261,7 +261,7 @@ def thread_packages(debug):
 if __name__ == '__main__':
     thread_read_h = threading.Thread(target=thread_read, args=[False])
     thread_update_h = threading.Thread(target=thread_update, args=[False])
-    thread_packages_h = threading.Thread(target=thread_packages, args=[True])
+    thread_packages_h = threading.Thread(target=thread_packages, args=[False])
 
     thread_read_h.start()
     thread_update_h.start()
