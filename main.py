@@ -216,6 +216,7 @@ def in_pkt_get_oid_from_if_name(interface_name):
         return leading_values + "9"
 
 
+
 def thread_packages(debug):
     cprint(debug, "Hola")
     val = get_oid_value("10.1.0.254", out_pkt_get_oid_from_if_name("FastEthernet0/0"))
