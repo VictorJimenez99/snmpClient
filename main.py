@@ -5,35 +5,6 @@ from pysnmp.hlapi import *
 import threading
 
 
-def get_oid_value_by_name(ip, object_identity_object):
-    engine = SnmpEngine()
-
-    user_data = UsmUserData(userName=b"snmp_admin",
-                            authKey=b"qwertyui",
-                            privKey=b"qwertyui",
-                            privProtocol=(1, 3, 6, 1, 6, 3, 10, 1, 2, 2),
-                            authProtocol=(1, 3, 6, 1, 6, 3, 10, 1, 1, 3))
-    iterator = getCmd(
-        engine, user_data,
-        UdpTransportTarget((ip, 161)),
-        ContextData(),
-        ObjectType(object_identity_object)
-    )
-    error_indication, error_status, error_index, var_binds = next(iterator)
-    if error_indication:
-        print(f"errorIndication: {error_indication}")
-
-    elif error_status:
-        print('%s at %s' % (error_status.prettyPrint(),
-                            error_index and var_binds[int(error_index) - 1][0] or '?'))
-
-    else:
-        for varBind in var_binds:
-            result = (' = '.join([x.prettyPrint() for x in varBind]))
-            result = result.split(' = ')
-            return result[1]
-
-
 def get_oid_value(ip, oid):
     engine = SnmpEngine()
 
@@ -201,9 +172,53 @@ def thread_read(debug):
         time.sleep(sleep_time)
 
 
+def out_pkt_get_oid_from_if_name(interface_name):
+    leading_values = "1.3.6.1.2.1.2.2.1.17."
+    if interface_name == "FastEthernet0/0":
+        return leading_values + "1"
+    if interface_name == "FastEthernet1/0":
+        return leading_values + "2"
+    if interface_name == "FastEthernet1/1":
+        return leading_values + "3"
+    if interface_name == "FastEthernet2/0":
+        return leading_values + "4"
+    if interface_name == "FastEthernet2/1":
+        return leading_values + "5"
+    if interface_name == "Ethernet3/0":
+        return leading_values + "6"
+    if interface_name == "Ethernet3/1":
+        return leading_values + "7"
+    if interface_name == "FastEthernet3/2":
+        return leading_values + "8"
+    if interface_name == "FastEthernet3/3":
+        return leading_values + "9"
+
+
+def in_pkt_get_oid_from_if_name(interface_name):
+    leading_values = "1.3.6.1.2.1.2.2.1.11."
+    if interface_name == "FastEthernet0/0":
+        return leading_values + "1"
+    if interface_name == "FastEthernet1/0":
+        return leading_values + "2"
+    if interface_name == "FastEthernet1/1":
+        return leading_values + "3"
+    if interface_name == "FastEthernet2/0":
+        return leading_values + "4"
+    if interface_name == "FastEthernet2/1":
+        return leading_values + "5"
+    if interface_name == "Ethernet3/0":
+        return leading_values + "6"
+    if interface_name == "Ethernet3/1":
+        return leading_values + "7"
+    if interface_name == "Ethernet3/2":
+        return leading_values + "8"
+    if interface_name == "Ethernet3/3":
+        return leading_values + "9"
+
+
 def thread_packages(debug):
     cprint(debug, "Hola")
-    val = get_oid_value("10.1.0.254", "1.3.6.1.2.1.2.2.1.17")
+    val = get_oid_value("10.1.0.254", out_pkt_get_oid_from_if_name("FastEthernet0/0"))
     cprint(debug, val)
 
 
