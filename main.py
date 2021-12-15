@@ -254,6 +254,7 @@ def thread_packages(debug):
                 cprint(debug, f"pkt: error updating interface val: {update_resp.text}")
                 continue
 
+        print(f"success sleeping for: {sleep_time}")
         time.sleep(sleep_time)
 
 
