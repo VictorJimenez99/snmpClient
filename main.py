@@ -220,9 +220,8 @@ def in_pkt_get_oid_from_if_name(interface_name):
 
 
 def thread_packages(debug):
-    val = get_oid_value("10.1.0.254", out_pkt_get_oid_from_if_name("FastEthernet0/0"))
     while True:
-        cprint(debug, "pkts: loop_start_read")
+        cprint(debug, "pkt: loop_start_read")
         sess = requests.Session()
         credentials_json = {"name": "root", "password": "root"}
         # payload_req = {'json_payload': credentials_json}
@@ -232,7 +231,7 @@ def thread_packages(debug):
 
         response_ss = sess.get(url_get_snmp_list_packets)
         if response_ss.status_code != 200:
-            cprint(debug, "read: error sleeping for 10s")
+            cprint(debug, "pkt: error sleeping for 10s")
             time.sleep(10)
             continue
         json_ret = response_ss.json()
@@ -240,9 +239,22 @@ def thread_packages(debug):
         list_needs_read = json_ret.get("list")
         sleep_time = int(json_ret.get("sleep"))
 
-        cprint(debug, f"list: {list_needs_read}, sleep_time: {sleep_time}")
+        cprint(debug, f"pkt: list: {list_needs_read}, sleep_time: {sleep_time}")
 
-        time.sleep(10)
+        for interface_object in list_needs_read:
+            interface = interface_object.get("interface")
+            ip_addr = interface_object.get("ip_addr")
+            name = interface_object.get("name")
+            out_pkt = get_oid_value(ip_addr, out_pkt_get_oid_from_if_name(interface))
+            in_pkt = get_oid_value(ip_addr, in_pkt_get_oid_from_if_name(interface))
+
+            json_payload = {"name": name, "interface": interface, "sent": out_pkt, "received": in_pkt}
+            update_resp = sess.post(url_set_snmp_packet, json=json_payload)
+            if update_resp.status_code != 200:
+                cprint(debug, f"pkt: error updating interface val: {update_resp.text}")
+                continue
+
+        time.sleep(sleep_time)
 
 
 if __name__ == '__main__':
