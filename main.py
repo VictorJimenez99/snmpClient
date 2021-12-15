@@ -203,7 +203,7 @@ def thread_read(debug):
 
 def thread_packages(debug):
     cprint(debug, "Hola")
-    val = get_oid_value_by_name("10.1.0.254", ObjectIdentity('SNMPv2-MIB', 'ifDescr', 1))
+    val = get_oid_value("10.1.0.254", "1.3.6.1.2.1.2.2.1.17")
     cprint(debug, val)
 
 
